@@ -1,15 +1,20 @@
 
 
 import './App.css'
+import Body from './Components/Body'
+import Login from './Components/Login'
+import { Routes,Route } from "react-router-dom";
 
 function App() {
 
 
   return (
     <>
-      <div className='text-gray-500'>
-         tailwind css
-      </div>
+      <Routes>
+            <Route path='/' element={<Body/>} >
+                <Route path='/login' element={<Login/>} />
+            </Route>
+        </Routes>
     </>
   )
 }
