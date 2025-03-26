@@ -1,8 +1,9 @@
 
 
-import './App.css'
+
 import Body from './Components/Body'
 import Login from './Components/Login'
+import SignUp from './Components/SignUp';
 import { Routes,Route } from "react-router-dom";
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
       <Routes>
             <Route path='/' element={<Body/>} >
                 <Route path='/login' element={<Login/>} />
+                <Route path='/SignUp' element={<SignUp/>} />
             </Route>
         </Routes>
     </>

@@ -1,19 +1,19 @@
 import { useState, useRef } from "react";
 import { FaEyeSlash, FaRegEye } from "react-icons/fa";
 import ReCAPTCHA from "react-google-recaptcha";
+import { Link } from "react-router-dom";
+import PasswordVisibility from "./PasswordVisibility";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
-  
+   
   const recaptcha = useRef(null);
 
-  const tooglePassword = () => {
-    setShowPassword(!showPassword);
-  };
+
 
   return (
     <div className="flex h-screen  justify-center   ">
-      <div className="relative mt-17 flex flex-col   xl:w-1/4 lg:w-2/4 sm:w-3/5 xs:w-3/4  md:w-2/4  w-3/3  h-[700px] bg-black text-white opacity-95 ">
+      <div className="relative mt-10 flex flex-col   xl:w-1/4 lg:w-2/6 md:w-2/4 sm:w-3/5 xs:w-2/4     w-7/8  lg:h-5/6  xl:h-3/4  md:h-4/5 sm:h-4/5  h-6/7 bg-black text-white opacity-95 ">
         <div className="m-8 mt-6 pr-8 p-4">
           <h1 className="my-4 m-4 text-4xl"> Sign In </h1>
 
@@ -29,36 +29,16 @@ const Login = () => {
             placeholder="password"
             className="    border-zinc-500 text-white bg-gray-800 rounded border-1 p-3 m-3 w-full"
           />
-          {showPassword ? (
-            <button
-              type="button"
-              className="cursor-pointer absolute top-54 right-15 border-none "
-            >
-              <FaRegEye
-                onClick={() => {
-                  tooglePassword();
-                }}
-              />
-            </button>
-          ) : (
-            <button
-              type="button"
-              className="cursor-pointer absolute top-54 right-15 border"
-            >
-              <FaEyeSlash
-                onClick={() => {
-                  tooglePassword();
-                }}
-              />
-            </button>
-          )}
+         
+
+         <PasswordVisibility showPassword={showPassword} setPassword={setShowPassword} top="54"/>
 
           <button className="bg-red-700 opacity-100  rounded m-3 p-2 w-full ">
             {" "}
             SIGN IN{" "}
           </button>
           <p className="mx w-full m-3 text-zinc-500 p-2">
-            New to MovieGPT? <span className="text-white">Sign up now.</span>
+            New to MovieGPT? <Link to='/SignUp'   className="text-white">Sign up now.</Link>
           </p>
 
           <div className="flex justify-center ">

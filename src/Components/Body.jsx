@@ -6,8 +6,8 @@ import { Outlet } from "react-router-dom";
 
 const Body = () => {
   return (
-    <div className="overflow-hidden">
-      <img src={BG_URL} className="overflow-hidden absolute h-screen object-cover" />;
+    <div >
+      <img src={BG_URL} className="overflow-hidden absolute w-screen h-screen  object-cover" />;
       <Heading />
       <Outlet/>
       
