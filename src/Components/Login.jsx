@@ -3,12 +3,20 @@ import { FaEyeSlash, FaRegEye } from "react-icons/fa";
 import ReCAPTCHA from "react-google-recaptcha";
 import { Link } from "react-router-dom";
 import PasswordVisibility from "./PasswordVisibility";
+import validation from "../../utils/validation";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
-   
+  const email=useRef(null)
+  const password=useRef(null)
   const recaptcha = useRef(null);
-
+  const [error,setError]=useState("")
+ 
+  const handleSubmit=()=>{
+   console.log("hello")
+    setError(validation(email.current.value,password.current.value))
+   
+  }
 
 
   return (
@@ -21,22 +29,24 @@ const Login = () => {
             id="email"
             type="email"
             placeholder="EMAIL ID"
+            ref={email}
             className="   border-zinc-500 text-white bg-gray-800 rounded border-1 p-3 m-3 w-full"
           />
           <input
             id="password"
             type={showPassword ? "text" : "password"}
             placeholder="password"
+            ref={password}
             className="    border-zinc-500 text-white bg-gray-800 rounded border-1 p-3 m-3 w-full"
           />
          
 
          <PasswordVisibility showPassword={showPassword} setPassword={setShowPassword} top="54"/>
 
-          <button className="bg-red-700 opacity-100  rounded m-3 p-2 w-full ">
-            {" "}
-            SIGN IN{" "}
+          <button onClick={()=>handleSubmit()} className="bg-red-700 opacity-100  rounded m-3 p-2 w-full ">
+            SIGN IN
           </button>
+           <p className="mx w-full m-3 p-2 text-red-600">{error}</p>
           <p className="mx w-full m-3 text-zinc-500 p-2">
             New to MovieGPT? <Link to='/SignUp'   className="text-white">Sign up now.</Link>
           </p>
