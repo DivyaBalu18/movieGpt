@@ -2,6 +2,8 @@ import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import PasswordVisibility from "./PasswordVisibility";
 import validation from "../../utils/validation";
+import {auth} from "../../utils/firebase"
+import {createUserWithEmailAndPassword,updateProfile } from "firebase/auth";
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -9,18 +11,46 @@ const SignUp = () => {
   const email = useRef(null);
   const password = useRef(null);
   const confirmPassword = useRef(null);
-  const user = useRef(null);
+  const username = useRef(null);
   const [Error, setError] = useState("");
 
  
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError("")
+
+ 
    
     setError(validation(email.current.value, password.current.value));
     if (password.current.value !== confirmPassword.current.value)
         setError("passwords do not match");
+    
+    console.log(Error)
+    if(Error) return;
+
+   
+    
+    try {
+       console.log("ok")
+      const userCredential = await createUserWithEmailAndPassword(auth,email.current.value, password.current.value);
+      const user = userCredential.user;
+  
+      console.log(user)
+      await updateProfile(user, {
+        displayName: username.current.value
+      });
+  
+      setError("User created")
+  
+    } catch (error) {
+      
+      const errorMessage = error.message;
+     
+      setError(errorMessage)
+    }
+
+
 
   };
 
@@ -33,7 +63,7 @@ const SignUp = () => {
           <input
             id="name"
             type="text"
-            ref={user}
+            ref={username}
             placeholder="Name"
             className="   border-zinc-500 text-white bg-gray-800 rounded border-1 p-3 m-3 w-full"
           />
@@ -72,15 +102,15 @@ const SignUp = () => {
           <PasswordVisibility
             showPassword={showConfirmPassword}
             setPassword={setShowConfirmPassword}
-            top="90"
+            top="92"
           />
 
           <button
-            type="submit"
+            
             onClick={(e) => {
               handleSubmit(e);
             }}
-            className="bg-red-700 opacity-100  rounded m-3 p-2 w-full disabled:border-gray-200 disabled:bg-gray-50 disabled:text-gray-500 disabled:shadow-none dark:disabled:border-gray-700 dark:disabled:bg-gray-800/20 "
+            className="bg-red-700 cursor-pointer opacity-100  rounded m-3 p-2 w-full hover:bg-red-600 focus:outline-2 focus:border-black focus:outline-red-500 active:bg-red-700 "
           >
             SIGN IN
           </button>
@@ -88,7 +118,7 @@ const SignUp = () => {
           <p className="px-3 mx-3  w-full text-red-500">{Error}</p>
 
           <p className="mx w-full m-3 text-zinc-500 p-2">
-            <Link to="/login" className="text-white">
+            <Link to="/" className="text-white">
               Click here for Login.
             </Link>
           </p>

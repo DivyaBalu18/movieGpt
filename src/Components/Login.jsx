@@ -4,20 +4,35 @@ import ReCAPTCHA from "react-google-recaptcha";
 import { Link } from "react-router-dom";
 import PasswordVisibility from "./PasswordVisibility";
 import validation from "../../utils/validation";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../utils/firebase";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const email=useRef(null)
-  const password=useRef(null)
+  const email = useRef(null);
+  const password = useRef(null);
   const recaptcha = useRef(null);
-  const [error,setError]=useState("")
- 
-  const handleSubmit=()=>{
-   console.log("hello")
-    setError(validation(email.current.value,password.current.value))
-   
-  }
+  const [error, setError] = useState("");
 
+  const handleSubmit = async () => {
+    console.log("Hi")
+    setError(validation(email.current.value, password.current.value));
+
+    if (error) return;
+
+    console.log("hello")
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      );
+      console.log(userCredential.user);
+    } catch (error) {
+      const errorMessage = error.message;
+      setError(errorMessage);
+    }
+  };
 
   return (
     <div className="flex h-screen  justify-center   ">
@@ -39,16 +54,25 @@ const Login = () => {
             ref={password}
             className="    border-zinc-500 text-white bg-gray-800 rounded border-1 p-3 m-3 w-full"
           />
-         
 
-         <PasswordVisibility showPassword={showPassword} setPassword={setShowPassword} top="54"/>
+          <PasswordVisibility
+            showPassword={showPassword}
+            setPassword={setShowPassword}
+            top="54"
+          />
 
-          <button onClick={()=>handleSubmit()} className="bg-red-700 opacity-100  rounded m-3 p-2 w-full ">
+          <button
+            onClick={() => handleSubmit()}
+            className="bg-red-700 opacity-100  rounded m-3 p-2 w-full "
+          >
             SIGN IN
           </button>
-           <p className="mx w-full m-3 p-2 text-red-600">{error}</p>
+          <p className="mx w-full m-3 p-2 text-red-600">{error}</p>
           <p className="mx w-full m-3 text-zinc-500 p-2">
-            New to MovieGPT? <Link to='/SignUp'   className="text-white">Sign up now.</Link>
+            New to MovieGPT?{" "}
+            <Link to="/SignUp" className="text-white">
+              Sign up now.
+            </Link>
           </p>
 
           <div className="flex justify-center ">
