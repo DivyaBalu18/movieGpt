@@ -1,11 +1,15 @@
-import { useState, useRef } from "react";
+import { useState, useRef ,useEffect} from "react";
 import { Link } from "react-router-dom";
 import PasswordVisibility from "./PasswordVisibility";
 import validation from "../../utils/validation";
 import {auth} from "../../utils/firebase"
 import {createUserWithEmailAndPassword,updateProfile } from "firebase/auth";
+import { BG_URL } from "../../utils/constants";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const SignUp = () => {
+  const user = useSelector((store) => store.user);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const email = useRef(null);
@@ -13,8 +17,13 @@ const SignUp = () => {
   const confirmPassword = useRef(null);
   const username = useRef(null);
   const [Error, setError] = useState("");
+  const naviagte = useNavigate();
 
- 
+  useEffect(() => {
+    if (user) {
+      return naviagte("/browse");
+    }
+  }, [user]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -32,16 +41,16 @@ const SignUp = () => {
    
     
     try {
-       console.log("ok")
+      
       const userCredential = await createUserWithEmailAndPassword(auth,email.current.value, password.current.value);
       const user = userCredential.user;
   
-      console.log(user)
+    
       await updateProfile(user, {
         displayName: username.current.value
       });
   
-      setError("User created")
+      
   
     } catch (error) {
       
@@ -55,6 +64,8 @@ const SignUp = () => {
   };
 
   return (
+    <div>
+    <img src={BG_URL} className="overflow-hidden absolute w-screen h-screen  object-cover" />;
     <div className="flex h-screen  justify-center   ">
       <div className="relative rounded-lg mt-10 flex flex-col   xl:w-1/4 lg:w-2/6 md:w-2/4 sm:w-3/5 xs:w-2/4     w-7/8  lg:h-4/6  xl:h-3/5  md:h-3/5 sm:h-3/5  h-5/7 bg-black text-white opacity-90 ">
         <div className="m-8 mt-6 pr-8 p-4">
@@ -124,6 +135,7 @@ const SignUp = () => {
           </p>
         </div>
       </div>
+    </div>
     </div>
   );
 };
