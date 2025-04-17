@@ -4,9 +4,12 @@ import { useEffect } from "react";
 import PrimaryContainer from "./PrimaryContainer";
 import SecondaryContainer from "./SecondaryContainer";
 import useNowPlayingMovies from "../Hooks/useNowPlayingMovies";
+import useAnyMovies from "../Hooks/useAnyMovies";
 
 const Browse = () => {
   useNowPlayingMovies()
+ 
+  useAnyMovies(["popular","upcoming","top_rated"])
   const navigate = useNavigate();
   const user = useSelector((store) => store.user);
 

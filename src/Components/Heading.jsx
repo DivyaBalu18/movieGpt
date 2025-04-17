@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { signOut } from "firebase/auth";
 import { auth } from "../../utils/firebase";
 import { Link, useNavigate } from "react-router-dom";
+import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 
 const Heading = () => {
   const user = useSelector((store) => store.user);
@@ -29,26 +30,35 @@ const Heading = () => {
       </div>
       {user && (
         <div className="flex items-center absolute top-0 right-0 ">
-          <img src={USER_AVATAR} className="rounded-lg w-8 h-8" alt=""></img>
+         
+          <Menu>
+        <MenuButton className="inline-flex items-center gap-2 rounded-md  py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none   data-[focus]:outline-1 data-[focus]:outline-white">
+        <img src={USER_AVATAR} className="rounded-lg w-8 h-8" alt=""></img>
+        </MenuButton>
 
-          <button
-            onClick={() => {
-              handleClick();
-            }}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              className="size-9 m-2 text-red-700"
-            >
-              <path
-                fillRule="evenodd"
-                d="M7.5 3.75A1.5 1.5 0 0 0 6 5.25v13.5a1.5 1.5 0 0 0 1.5 1.5h6a1.5 1.5 0 0 0 1.5-1.5V15a.75.75 0 0 1 1.5 0v3.75a3 3 0 0 1-3 3h-6a3 3 0 0 1-3-3V5.25a3 3 0 0 1 3-3h6a3 3 0 0 1 3 3V9A.75.75 0 0 1 15 9V5.25a1.5 1.5 0 0 0-1.5-1.5h-6Zm10.72 4.72a.75.75 0 0 1 1.06 0l3 3a.75.75 0 0 1 0 1.06l-3 3a.75.75 0 1 1-1.06-1.06l1.72-1.72H9a.75.75 0 0 1 0-1.5h10.94l-1.72-1.72a.75.75 0 0 1 0-1.06Z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </button>
+        <MenuItems
+          transition
+          anchor="bottom end"
+          className="w-38 origin-top-right rounded-xl border border-white/5 bg-gray-800 p-1 text-sm/6 text-white transition duration-100 ease-out [--anchor-gap:var(--spacing-1)] focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0"
+        >
+          <MenuItem>
+            <button className="group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-white/10">
+             
+              Edit Profile
+            </button>
+          </MenuItem>
+
+          <div className="my-1 h-px bg-white/5" />
+
+          <MenuItem>
+            <button className="group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-white/10" onClick={()=>{handleClick()}}>
+              Sign Out
+            </button>
+          </MenuItem>
+        </MenuItems>
+      </Menu>
+
+
         </div>
       )}
     </div>
