@@ -4,6 +4,7 @@ import { signOut } from "firebase/auth";
 import { auth } from "../../utils/firebase";
 import { Link, useNavigate } from "react-router-dom";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
+import Search from "./Search";
 
 const Heading = () => {
   const user = useSelector((store) => store.user);
@@ -19,20 +20,25 @@ const Heading = () => {
     }
   };
   return (
-    <div>
-      <div className="absolute top-0 ">
+    <div className="absolute top-0 flex justify-between  w-screen ">
+      <div>
         <Link to="/browse">
           <img
-            className="relative m-2  w-30  md:w-32 lg:w-42  xl:w-48  "
+            className="relative m-1 lg:m-2  w-30  md:w-32 lg:w-42  xl:w-48  "
             src="/logo.png"
           ></img>
         </Link>
       </div>
+      <div >
       {user && (
-        <div className="flex items-center absolute top-0 right-0 ">
+        <div className="flex  m-1 lg:m-2 "> 
+         <div className=" mr-5 md:mr-40 m-1"> 
+         <Search/>
+         </div>
+        <div className="m-1  ">
          
           <Menu>
-        <MenuButton className="inline-flex items-center gap-2 rounded-md  py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none   data-[focus]:outline-1 data-[focus]:outline-white">
+        <MenuButton className="inline-flex items-center gap-2 rounded-md   text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none   data-[focus]:outline-1 data-[focus]:outline-white">
         <img src={USER_AVATAR} className="rounded-lg w-8 h-8" alt=""></img>
         </MenuButton>
 
@@ -60,7 +66,9 @@ const Heading = () => {
 
 
         </div>
+        </div>
       )}
+      </div>
     </div>
   );
 };

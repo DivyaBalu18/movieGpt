@@ -5,6 +5,7 @@ import { Routes, Route } from "react-router-dom";
 import {Provider} from 'react-redux'
 import {store} from '../utils/appStore'
 import Browse from "./Components/Browse";
+import GptSearch from "./Components/GptSearch";
 
 function App() {
   return (
@@ -14,7 +15,9 @@ function App() {
           <Route index path="/" element={<Login />} />
           <Route path="/SignUp" element={<SignUp />} />
           <Route path='/browse' element={<Browse/>}></Route>
+          <Route path="/search" element={<GptSearch/>}></Route>
         </Route>
+       
        
       </Routes>
     </Provider>

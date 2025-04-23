@@ -17,7 +17,7 @@ const useMovieTrailer = (movieId) => {
       const filter_result=trailer_json.results.filter((video)=>video.name==="Official Trailer")
        
       const trailer=filter_result?filter_result[0]:trailer_json.results[0]
-      console.log(trailer)
+      
       dispatch(addTrailer(trailer));
     };
   

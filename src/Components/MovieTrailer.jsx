@@ -9,7 +9,7 @@ const MovieTrailer = ({ movieId }) => {
   return (
     <div className="w-screen">
       <iframe
-        className="w-screen aspect-video -mt-6"
+        className="w-screen aspect-video -mt-3"
         src={"https://www.youtube-nocookie.com/embed/"+trailer?.key+"?&autoplay=1&mute=1&rel=0&amp;controls=0&&loop=1&&playlist="+trailer?.key}
         title="YouTube video player"
         
